@@ -1,0 +1,46 @@
+// 3. SHOW CODE DEMONSTRATING FETCH_ALL(). USE PRINT_R(). WITH “<pre>” TAG IN BETWEEN. 
+$stmt = $pdo->prepare("SELECT * FROM patients");
+$stmt->execute();
+
+$patients = $stmt->fetchAll();
+
+if ($patients) {
+    echo "<pre>";
+    print_r($patients);
+    echo "</pre>";
+} else {
+    echo "No patients found.";
+}
+?>
+
+// 4. SHOW CODE DEMONSTRATING HOW FETCH() IS USED. USE PRINT_R(). WITH “<pre>” TAG IN BETWEEN.
+$stmt = $pdo->prepare("SELECT * FROM patients");
+
+if ($stmt->execute()) {
+    echo "<pre>";
+    print_r($stmt->fetchAll());
+    echo "<pre>";
+}
+
+// 5. SHOW CODE DEMONSTRATING INSERTION OF RECORD TO YOUR DATABASE
+$stmt = $pdo->prepare("SELECT * FROM patients");
+
+    if ($stmt->execute()) {
+        if ($patient = $stmt->fetch()) {
+            // Print the current row as a table row
+            echo "<h1>Patient Records</h1>";
+            echo "<table border='1'>";
+            echo "<tr><th>ID</th><th>Name</th><th>Date of Birth</th><th>Gender</th><th>Contact Info</th></tr>";
+            echo "<tr>";
+            echo "<td>" . $patient['id'] . "</td>";
+            echo "<td>" . $patient['name'] . "</td>";
+            echo "<td>" . $patient['date_of_birth'] . "</td>";
+            echo "<td>" . $patient['gender'] . "</td>";
+            echo "<td>" . $patient['contact_info'] . "</td>";
+            echo "</tr>";
+            echo "</table>";
+        } else {
+            echo "No patient records found.";
+        }
+    } 
+    ?>
