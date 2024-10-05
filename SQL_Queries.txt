@@ -44,3 +44,75 @@ $stmt = $pdo->prepare("SELECT * FROM patients");
         }
     } 
     ?>
+
+
+// 6. SHOW CODE DEMONSTRATING DELETION OF RECORD TO YOUR DATABASE
+
+  <?php
+    // patient name and date of birth to delete
+    $patientName = 'Juan Dela Cruz';
+    $dateOfBirth = '1985-06-15';
+
+    // SQL query to delete a patient record
+    $stmt = $pdo->prepare("DELETE FROM patients WHERE name = '$patientName' AND date_of_birth = '$dateOfBirth'");
+
+    if ($stmt->execute()) {
+        echo "Patient record deleted successfully!";
+    }
+    ?>
+
+// 7. SHOW CODE DEMONSTRATING UPDATING OF RECORD FROM YOUR DATABASE
+ <?php
+    // Define the patient data to update
+    $patientId = 3;
+    $patientName = 'Hindi po ako spy';
+    $dateOfBirth = '1990-01-01';
+    $gender = 'Female';
+    $contactInfo = 'aliceguo@email.com';
+
+    // SQL query to update a patient record
+    $stmt = $pdo->prepare("UPDATE patients SET name = '$patientName', date_of_birth = '$dateOfBirth', gender = '$gender', contact_info = '$contactInfo' WHERE id = '$patientId'");
+
+    if ($stmt->execute()) {
+        echo "Patient record updated successfully!";
+    } 
+    ?>
+
+
+// 8. SHOW CODE DEMONSTRATING AN SQL QUERY’S RESULT SET IS RENDERED ON AN HTML TABLE
+  <style>
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+
+<?php
+    $stmt = $pdo->prepare("SELECT * FROM patients");
+
+    if ($stmt->execute()) {
+        // Start the HTML table
+        echo "<h1>Patient Records</h1>";
+        echo "<table>";
+        echo "<tr><th>ID</th><th>Name</th><th>Date of Birth</th><th>Gender</th><th>Contact Info</th></tr>";
+
+        if ($patient = $stmt->fetch()) {
+            echo "<tr>";
+            echo "<td>" . $patient['id'] . "</td>";
+            echo "<td>" . $patient['name'] . "</td>";
+            echo "<td>" . $patient['date_of_birth'] . "</td>";
+            echo "<td>" . $patient['gender'] . "</td>";
+            echo "<td>" . $patient['contact_info'] . "</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+    }
+    ?>
